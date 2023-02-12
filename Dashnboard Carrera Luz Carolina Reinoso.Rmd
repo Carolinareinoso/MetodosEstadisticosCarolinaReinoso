@@ -1,0 +1,164 @@
+---
+title: "Carrera Luz 2022" 
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      bg: "#FFFFFF"
+      fg: "#000000" 
+      primary: "#0000ff"
+      base_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(dbplyr)
+library(lubridate)
+library(tm)
+library(ggplot2)
+library(wordcloud)
+library(shiny)
+library(ggplot2)
+library(fontawesome)
+library(hrbrthemes)
+# Install thematic and un-comment for themed static plots (i.e., ggplot2)
+# thematic::thematic_rmd()
+```
+```{r}
+library(paqueteMET)
+data("CarreraLuz22")
+```
+
+Column {data-width=300 .tabset}
+-----------------------------------------------------------------------
+
+### Tiempo General
+
+```{r}
+ggplot(data.frame(CarreraLuz22), aes(x= CarreraLuz22$timerun/60))  +
+  geom_histogram(fill = "gray", color = "black")+
+  labs(x = "Tiempo",y ="Personas") +
+  theme_minimal()+
+  ggtitle("Tiempo General") 
+```
+
+### Categorias
+
+```{r} 
+ X = (CarreraLuz22$categoria)
+ Y =(CarreraLuz22$timerun/60)
+
+ 
+ggplot(CarreraLuz22, aes(x = X, y = Y, fill = X)) + 
+ geom_boxplot(aes(fill = X)) +
+  theme_classic() +
+  labs(x = "Categoria", y = "Tiempo") +
+  ggtitle("Promedio por Categoria")+
+  scale_fill_manual(values = c("blue","pink","purple","gray","white")) 
+  
+```
+
+### Categoria por Genero
+
+```{r}
+Muj = subset(CarreraLuz22, CarreraLuz22$sex == "Mujer")
+Hom = subset(CarreraLuz22, CarreraLuz22$sex == "Hombre")
+#barplot(table(CarreraLuz22$sex,CarreraLuz22$categoria))
+
+
+ggplot(data = CarreraLuz22, mapping = aes(x = factor(categoria),
+                                          fill= factor(sex)))+
+    geom_bar(position = "dodge", stat = "count",color = "black")+
+    geom_text(aes(label = ..count..), stat = "count", vjust = -0.5, hjust = -0.3, size = 4)+
+    scale_fill_manual(values = c("blue","pink"))  +
+    theme_minimal()+
+     labs(x = "Categoria", y = "Personas") 
+    
+
+```
+
+
+### Edades
+
+```{r}
+ggplot(data.frame(CarreraLuz22), aes(x= CarreraLuz22$edad))  +
+  geom_histogram(fill = "gray", color = "black")+
+  labs(x = "Edad",y ="Personas") +
+  theme_minimal()+
+  ggtitle("Distribución por Edades") 
+```
+  
+
+Column {data-width=140} 
+-----------------------------------------------------------------------
+
+### Tiempo Mujeres 
+
+```{r}
+ggplot(data.frame(Muj), aes(x= Muj$timerun/60))  +
+  geom_histogram(fill = "pink", color = "black")+
+  labs(x = "Tiempo",y ="Personas") +
+  theme_minimal()+
+  ggtitle("Tiempo Mujeres") 
+```
+ 
+### Tiempo Hombres
+```{r}
+
+ggplot(data.frame(Hom), aes(x= Hom$timerun/60))  +
+  geom_histogram(fill = "blue", color = "black")+
+  labs(x = "Tiempo",y ="Personas") +
+  theme_minimal()+
+  ggtitle("Tiempo Hombres") 
+```
+ 
+Column {data-width=120}
+-----------------------------------------------------------------------
+
+Datos Principales
+
+
+###  Mejor Tiempo
+
+```{r}
+valueBox(paste(round(min(CarreraLuz22$timerun/60),2),"min"), 
+         icon = "fa-medal",
+         color = "pink")
+```
+
+### Tiempo Promedio
+
+```{r}
+valueBox(paste(round(mean(CarreraLuz22$timerun/60),2),"min"), 
+         icon = "fa-clock",
+         color = "white")
+```
+
+###  Total Mujeres 
+
+```{r}
+valueBox(paste(sum(CarreraLuz22$sex == "Mujer"),"Mujeres"), 
+         icon = "fa-venus",
+         color = "purple")
+```
+
+
+###  Total Hombres
+
+```{r}
+valueBox(paste(sum(CarreraLuz22$sex == "Hombre"),"Hombres"),
+         icon = "fa-mars",
+         color = "blue")
+```
+###  Edad Promedio
+
+```{r}
+valueBox(paste(round(mean(CarreraLuz22$edad),0),"Años"),
+         icon = "fa-user",
+         color = "#9599e9")
+```
+
