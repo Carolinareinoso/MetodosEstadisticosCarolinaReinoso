@@ -93,12 +93,14 @@ ggplot(data.frame(CarreraLuz22), aes(x= CarreraLuz22$edad))  +
 ```
   
 ### Análisis
+
+Analisis de la carrera.
  
 Total kilometros 10.07km
 
-Esta carrera conto con 6 cateragorias 5 categorias,motivo por el cual habian participantes desde 15 años hasta 70 años, teniendo asi una edad promedio de 37 años, el mejor tiempo fue de 33.13 min. 
-En esta  carreta participaron 744 mujeres correspondiente al 39% y  1.178 hombres correspondiente al 69%, la mayor parcicipacion de mujeres se dio en la categoria abierta con 502 participantes. 
- la categoria Juvenil fue la obtivo el mejor tiempo. 
+Esta carrera conto con 5 categorias motivo por el cual habian participantes desde los 15 años hasta 70 años, teniendo asi una edad promedio de 37 años, el mejor tiempo fue de 33.13 min. 
+En esta  carreta participaron 744 mujeres correspondiente al 39% y  1.178 hombres correspondiente al 69%, la mayor parcicipación de mujeres se dio en la categoria abierta con 502 participantes. 
+La categoria Juvenil fue la obtuvo el mejor tiempo. 
  
 Column {data-width=160}
 ------------------------------------------------------------------------------
